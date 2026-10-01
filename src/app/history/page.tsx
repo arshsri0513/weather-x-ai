@@ -129,12 +129,15 @@ export default function HistoryPage() {
 
                 {simLogs.length > 0 ? (
                   <div className="w-full max-w-lg mx-auto bg-black/50 border border-slate-700 p-4 rounded-xl text-left font-mono text-xs shadow-inner h-32 overflow-y-auto flex flex-col gap-2">
-                    {simLogs.map((log, i) => (
-                      <div key={i} className="text-emerald-400">
-                        <span className="text-slate-500 select-none mr-2">[{log.time}]</span>
-                        {log.text}
-                      </div>
-                    ))}
+                    {simLogs?.map((log, i) => {
+                      if (!log || typeof log !== 'object' || !log.text) return null;
+                      return (
+                        <div key={i} className="text-emerald-400">
+                          <span className="text-slate-500 select-none mr-2">[{log.time}]</span>
+                          {log.text}
+                        </div>
+                      )
+                    })}
                     {isSimulating && <div className="text-slate-500 animate-pulse">_</div>}
                   </div>
                 ) : (

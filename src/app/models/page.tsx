@@ -165,7 +165,8 @@ export default function ModelsPage() {
           </div>
           
           <div className="bg-black/50 border border-slate-800/80 rounded-xl p-5 h-64 overflow-y-auto font-mono text-xs shadow-inner flex flex-col gap-2">
-            {logs.map((log, i) => {
+            {logs?.map((log, i) => {
+              if (!log || typeof log !== 'object' || !log.text) return null;
               // Color code specific logs for realism
               let colorClass = "text-slate-400";
               if (log.text.includes("WARNING")) colorClass = "text-[var(--color-high)]";
