@@ -22,10 +22,10 @@ export default function AboutPage() {
           <span>Tailwind CSS</span>
         </div>
 
-        <div className="inline-flex items-center gap-2 bg-slate-900 border border-slate-700 px-6 py-3 rounded-xl relative z-10">
-          <Code size={18} className="text-slate-400" />
-          <span className="text-white font-bold">Built for Advanced Agentic UI</span>
-        </div>
+        <a href="https://github.com/arshsri0513" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-slate-900 border border-slate-700 px-6 py-3 rounded-xl relative z-10 hover:border-[var(--color-accent)] hover:bg-slate-800 transition-colors group">
+          <Code size={18} className="text-slate-400 group-hover:text-[var(--color-accent)] transition-colors" />
+          <span className="text-white font-bold group-hover:text-[var(--color-accent)] transition-colors">Built by Arsh</span>
+        </a>
       </div>
     </div>
   )
