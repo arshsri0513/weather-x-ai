@@ -22,7 +22,11 @@ const STREAM_LOGS = [
 ];
 
 export default function ModelsPage() {
-  const [logs, setLogs] = useState<string[]>(INITIAL_LOGS);
+  const [logs, setLogs] = useState<{text: string, time: string}[]>([
+    { text: "WEATHER-X AI Core v2.4.1-prod initialized.", time: new Date().toLocaleTimeString('en-GB') },
+    { text: "Establishing secure connection to geospatial data lake...", time: new Date().toLocaleTimeString('en-GB') },
+    { text: "OK. Listening for new meteorological ingest streams.", time: new Date().toLocaleTimeString('en-GB') }
+  ]);
   const [isStreaming, setIsStreaming] = useState(false);
 
   useEffect(() => {
@@ -31,7 +35,7 @@ export default function ModelsPage() {
     let currentIndex = 0;
     const interval = setInterval(() => {
       if (currentIndex < STREAM_LOGS.length) {
-        setLogs(prev => [...prev, STREAM_LOGS[currentIndex]]);
+        setLogs(prev => [...prev, { text: STREAM_LOGS[currentIndex], time: new Date().toLocaleTimeString('en-GB') }]);
         currentIndex++;
       } else {
         setIsStreaming(false);
@@ -43,7 +47,7 @@ export default function ModelsPage() {
   }, [isStreaming]);
 
   const triggerInference = () => {
-    setLogs(["[MANUAL OVERRIDE] Initiating forced inference cycle..."]);
+    setLogs([{ text: "[MANUAL OVERRIDE] Initiating forced inference cycle...", time: new Date().toLocaleTimeString('en-GB') }]);
     setIsStreaming(true);
   };
 
@@ -139,20 +143,20 @@ export default function ModelsPage() {
             {logs.map((log, i) => {
               // Color code specific logs for realism
               let colorClass = "text-slate-400";
-              if (log.includes("WARNING")) colorClass = "text-[var(--color-high)]";
-              if (log.includes("CRITICAL")) colorClass = "text-[var(--color-critical)]";
-              if (log.includes("OK") || log.includes("complete")) colorClass = "text-emerald-400";
+              if (log.text.includes("WARNING")) colorClass = "text-[var(--color-high)]";
+              if (log.text.includes("CRITICAL")) colorClass = "text-[var(--color-critical)]";
+              if (log.text.includes("OK") || log.text.includes("complete")) colorClass = "text-emerald-400";
 
               return (
                 <div key={i} className="flex gap-4">
-                  <span className="text-slate-600 select-none">[{new Date().toISOString().split('T')[1].slice(0,8)}]</span>
-                  <span className={colorClass}>{log}</span>
+                  <span className="text-slate-600 select-none">[{log.time}]</span>
+                  <span className={colorClass}>{log.text}</span>
                 </div>
               )
             })}
             {isStreaming && (
               <div className="flex gap-4">
-                <span className="text-slate-600 select-none">[{new Date().toISOString().split('T')[1].slice(0,8)}]</span>
+                <span className="text-slate-600 select-none">[{new Date().toLocaleTimeString('en-GB')}]</span>
                 <span className="text-slate-500 animate-pulse">_</span>
               </div>
             )}
