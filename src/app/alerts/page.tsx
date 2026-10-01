@@ -165,8 +165,12 @@ export default function AlertsPage() {
           <div className="absolute bottom-6 left-6 right-6">
              <div className="bg-slate-900/80 backdrop-blur border border-slate-700 p-4 rounded-xl">
                <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Primary Threat Vector</div>
-               <div className="text-sm font-bold text-white mb-1">Odisha Coastline (A-1088)</div>
-               <div className="text-xs text-red-400">Impact imminent. Evacuation recommended.</div>
+               <div className="text-sm font-bold text-white mb-1">
+                 {alerts.length > 0 ? `${alerts[0].location} (${alerts[0].id})` : 'Scanning...'}
+               </div>
+               <div className="text-xs text-red-400">
+                 {alerts.length > 0 && alerts[0].severity === 'CRITICAL' ? 'Impact imminent. Evacuation recommended.' : 'Monitoring anomaly trajectory.'}
+               </div>
              </div>
           </div>
         </div>
