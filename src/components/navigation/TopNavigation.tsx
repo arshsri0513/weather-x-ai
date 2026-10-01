@@ -1,5 +1,5 @@
 "use client";
-import { Search, User, Globe, Loader2 } from "lucide-react";
+import { Search, User, Globe, Loader2, Activity } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
 import { useMapContext } from "@/lib/MapContext";
@@ -73,6 +73,28 @@ export function TopNavigation() {
               {errorMsg}
             </div>
           )}
+        </div>
+
+        {/* Live Telemetry Bar */}
+        <div className="hidden xl:flex items-center gap-6 ml-8 text-[10px] font-mono font-bold uppercase tracking-widest text-slate-500">
+          <div className="flex items-center gap-2">
+             <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
+             Active Nodes: <span className="text-white">12,492</span>
+          </div>
+          <div className="h-3 w-px bg-slate-800"></div>
+          <div className="flex items-center gap-2">
+             <div className="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse"></div>
+             Avg Latency: <span className="text-white">14ms</span>
+          </div>
+          <div className="h-3 w-px bg-slate-800"></div>
+          <div className="flex items-center gap-2">
+             <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse shadow-[0_0_8px_red]"></div>
+             Threat Level: <span className="text-white">Elevated</span>
+          </div>
+          <div className="h-3 w-px bg-slate-800"></div>
+          <div className="flex items-center gap-2 text-purple-400">
+             <Activity size={12}/> Core Sync
+          </div>
         </div>
       </div>
 
