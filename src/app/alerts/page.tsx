@@ -1,9 +1,12 @@
 "use client";
 import { AlertTriangle, MapPin, Clock, ArrowRight, Activity, Thermometer, Wind, CloudRain, ShieldAlert } from "lucide-react";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 export default function AlertsPage() {
   const [alerts, setAlerts] = useState<any[]>([]);
+  const [activeFilter, setActiveFilter] = useState('ALL');
+  const [dispatched, setDispatched] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     // Generate dynamic mock alerts
@@ -16,6 +19,12 @@ export default function AlertsPage() {
     setAlerts(generated);
   }, []);
 
+  const handleDispatch = (id: string) => {
+    setDispatched(prev => ({ ...prev, [id]: true }));
+  };
+
+  const filteredAlerts = alerts.filter(a => activeFilter === 'ALL' || a.severity === activeFilter);
+
   return (
     <div className="p-10 max-w-7xl mx-auto pb-20">
       <div className="mb-10 flex justify-between items-end">
@@ -27,7 +36,7 @@ export default function AlertsPage() {
         </div>
         <div className="flex items-center gap-2 bg-red-500/10 border border-red-500/30 px-4 py-2 rounded-lg text-red-400 font-bold text-xs">
           <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
-          2 CRITICAL THREATS
+          {alerts.filter(a => a.severity === 'CRITICAL').length} CRITICAL THREATS
         </div>
       </div>
 
@@ -37,14 +46,23 @@ export default function AlertsPage() {
         <div className="lg:col-span-2 space-y-4">
           <div className="flex gap-2 mb-6">
             {['ALL', 'CRITICAL', 'HIGH RISK', 'MODERATE'].map(filter => (
-               <button key={filter} className={`px-5 py-2 rounded-lg text-xs font-bold transition-colors ${filter === 'ALL' ? 'bg-[var(--color-accent)] text-slate-900 shadow-lg shadow-[var(--color-accent)]/20' : 'bg-slate-900 border border-slate-700 text-slate-400 hover:bg-slate-800 hover:text-white'}`}>
+               <button 
+                 key={filter} 
+                 onClick={() => setActiveFilter(filter)}
+                 className={`px-5 py-2 rounded-lg text-xs font-bold transition-colors ${activeFilter === filter ? 'bg-[var(--color-accent)] text-slate-900 shadow-lg shadow-[var(--color-accent)]/20' : 'bg-slate-900 border border-slate-700 text-slate-400 hover:bg-slate-800 hover:text-white'}`}
+               >
                  {filter}
                </button>
             ))}
           </div>
 
-          {alerts.map(alert => {
+          {filteredAlerts.length === 0 ? (
+            <div className="text-center p-10 bg-slate-900 border border-slate-800 rounded-2xl text-slate-500">
+              No active alerts for this severity level.
+            </div>
+          ) : filteredAlerts.map(alert => {
             const Icon = alert.icon;
+            const isDispatched = dispatched[alert.id];
             return (
               <div key={alert.id} className={`flex flex-col md:flex-row items-start md:items-center justify-between p-6 rounded-2xl border ${alert.border} ${alert.bg} backdrop-blur-sm relative overflow-hidden group hover:shadow-lg hover:border-slate-500 transition-all`}>
                 <div className="flex items-center gap-6 z-10 w-full md:w-auto mb-6 md:mb-0">
@@ -73,11 +91,17 @@ export default function AlertsPage() {
                   </div>
                   <div className="h-12 w-px bg-slate-700/50 hidden md:block"></div>
                   <div className="flex flex-col gap-2">
-                    <button className="text-[10px] font-bold bg-slate-900 hover:bg-slate-800 text-white px-4 py-2 rounded-lg border border-slate-700 transition-colors w-32 text-center tracking-widest uppercase">
-                      VIEW ON MAP
-                    </button>
-                    <button className={`text-[10px] font-bold px-4 py-2 rounded-lg transition-colors w-32 text-center tracking-widest uppercase ${alert.severity === 'CRITICAL' ? 'bg-red-500 hover:bg-red-400 text-white shadow-lg shadow-red-500/20 border border-red-400' : 'bg-[var(--color-accent)] hover:bg-sky-400 text-slate-900 shadow-lg shadow-[var(--color-accent)]/20'}`}>
-                      DISPATCH
+                    <Link href={`/?search=${encodeURIComponent(alert.location)}`}>
+                      <button className="text-[10px] font-bold bg-slate-900 hover:bg-slate-800 text-white px-4 py-2 rounded-lg border border-slate-700 transition-colors w-32 text-center tracking-widest uppercase">
+                        VIEW ON MAP
+                      </button>
+                    </Link>
+                    <button 
+                      onClick={() => handleDispatch(alert.id)}
+                      disabled={isDispatched}
+                      className={`text-[10px] font-bold px-4 py-2 rounded-lg transition-colors w-32 text-center tracking-widest uppercase ${isDispatched ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/50 cursor-not-allowed' : alert.severity === 'CRITICAL' ? 'bg-red-500 hover:bg-red-400 text-white shadow-lg shadow-red-500/20 border border-red-400' : 'bg-[var(--color-accent)] hover:bg-sky-400 text-slate-900 shadow-lg shadow-[var(--color-accent)]/20'}`}
+                    >
+                      {isDispatched ? 'DISPATCHED' : 'DISPATCH'}
                     </button>
                   </div>
                 </div>
