@@ -110,20 +110,20 @@ export function TopNavigation() {
                 const select = document.getElementById('voice-lang-select') as HTMLSelectElement;
                 const lang = select ? select.value : 'en-US';
                 
+                // Set the language strictly to trigger the OS native voice pack
                 msg.lang = lang;
-                
-                // Try to find a matching voice, otherwise fallback to default
-                const voices = window.speechSynthesis.getVoices();
-                const matchingVoice = voices.find(v => v.lang.startsWith(lang.split('-')[0])) || voices.find(v => v.default) || voices[0];
-                if (matchingVoice) {
-                  msg.voice = matchingVoice;
-                }
 
-                if (lang.startsWith('hi')) msg.text = "Weather-X AI mein aapka swagat hai. Global system online.";
-                else if (lang.startsWith('es')) msg.text = "Bienvenido a Weather-X AI. Sistema global en línea.";
-                else if (lang.startsWith('fr')) msg.text = "Bienvenue sur Weather-X AI. Système global en ligne.";
-                else if (lang.startsWith('zh')) msg.text = "欢迎来到 Weather-X AI。全球系统已上线。";
-                else msg.text = "Welcome to Weather-X AI. Global spatio temporal intelligence system online.";
+                if (lang.startsWith('hi')) {
+                  msg.text = "Weather-X AI mein aapka swagat hai. Global system online.";
+                } else if (lang.startsWith('es')) {
+                  msg.text = "Bienvenido a Weather-X AI. Sistema global en línea.";
+                } else if (lang.startsWith('fr')) {
+                  msg.text = "Bienvenue sur Weather-X AI. Système global en ligne.";
+                } else if (lang.startsWith('zh')) {
+                  msg.text = "欢迎来到 Weather-X AI。全球系统已上线。";
+                } else {
+                  msg.text = "Welcome to Weather-X AI. Global spatio temporal intelligence system online.";
+                }
                 
                 msg.rate = 0.9;
                 window.speechSynthesis.speak(msg);
