@@ -76,7 +76,7 @@ export function TopNavigation() {
         </div>
 
         {/* Live Telemetry Bar */}
-        <div className="hidden xl:flex items-center gap-6 ml-8 text-[10px] font-mono font-bold uppercase tracking-widest text-slate-500">
+        <div className="hidden lg:flex items-center gap-4 xl:gap-6 ml-4 xl:ml-8 text-[9px] xl:text-[10px] font-mono font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap overflow-hidden">
           <div className="flex items-center gap-2">
              <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
              Active Nodes: <span className="text-white">12,492</span>
