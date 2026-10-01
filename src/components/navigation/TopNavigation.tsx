@@ -104,13 +104,21 @@ export function TopNavigation() {
         <div className="hidden md:flex items-center gap-2 text-sm text-slate-400 font-medium bg-slate-900/50 px-3 py-1.5 rounded-lg border border-slate-800 hover:bg-slate-800 transition-colors group relative">
           <button 
             onClick={() => {
-              if ('speechSynthesis' in window) {
+              if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
                 const msg = new SpeechSynthesisUtterance();
                 const select = document.getElementById('voice-lang-select') as HTMLSelectElement;
                 const lang = select ? select.value : 'en-US';
                 
                 msg.lang = lang;
+                
+                // Try to find a matching voice, otherwise fallback to default
+                const voices = window.speechSynthesis.getVoices();
+                const matchingVoice = voices.find(v => v.lang.startsWith(lang.split('-')[0])) || voices.find(v => v.default) || voices[0];
+                if (matchingVoice) {
+                  msg.voice = matchingVoice;
+                }
+
                 if (lang.startsWith('hi')) msg.text = "Weather-X AI mein aapka swagat hai. Global system online.";
                 else if (lang.startsWith('es')) msg.text = "Bienvenido a Weather-X AI. Sistema global en línea.";
                 else if (lang.startsWith('fr')) msg.text = "Bienvenue sur Weather-X AI. Système global en ligne.";
@@ -119,9 +127,11 @@ export function TopNavigation() {
                 
                 msg.rate = 0.9;
                 window.speechSynthesis.speak(msg);
+              } else {
+                alert("Voice synthesis is not supported in your browser.");
               }
             }}
-            className="cursor-pointer hover:scale-110 transition-transform"
+            className="cursor-pointer hover:scale-110 transition-transform p-1 rounded-full hover:bg-slate-800"
             title="Test Voice Modulation"
           >
             <Mic size={16} className="text-[var(--color-accent)] group-hover:animate-pulse"/>
