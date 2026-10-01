@@ -58,7 +58,7 @@ export default function LoginPage() {
         ) : (
           <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
             
-            <div className="flex gap-4">
+            <div className="flex flex-col gap-3">
               <SocialButton icon={Globe} provider="Google" />
               <SocialButton icon={Code} provider="GitHub" />
             </div>
