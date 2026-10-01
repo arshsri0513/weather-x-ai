@@ -37,10 +37,15 @@ export default function ModelsPage() {
 
   // Initialize with correct times on mount
   useEffect(() => {
+    const now = new Date();
+    const t1 = new Date(now.getTime() - 2400).toLocaleTimeString('en-GB');
+    const t2 = new Date(now.getTime() - 800).toLocaleTimeString('en-GB');
+    const t3 = now.toLocaleTimeString('en-GB');
+
     setLogs([
-      { text: "WEATHER-X AI Core v2.4.1-prod initialized.", time: new Date().toLocaleTimeString('en-GB') },
-      { text: "Establishing secure connection to geospatial data lake...", time: new Date().toLocaleTimeString('en-GB') },
-      { text: "OK. Listening for new meteorological ingest streams.", time: new Date().toLocaleTimeString('en-GB') }
+      { text: "WEATHER-X AI Core v2.4.1-prod initialized.", time: t1 },
+      { text: "Establishing secure connection to geospatial data lake...", time: t2 },
+      { text: "OK. Listening for new meteorological ingest streams.", time: t3 }
     ]);
     
     return () => {
