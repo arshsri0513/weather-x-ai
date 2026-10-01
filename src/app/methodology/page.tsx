@@ -68,17 +68,19 @@ export default function MethodologyPage() {
               { title: "Attention Transformer", desc: "Executing parallel inference via the ST-GCN core.", icon: Cpu, color: "text-[var(--color-accent)]" },
               { title: "Z-Score Evaluation", desc: "Calculating historical variance and severity.", icon: Activity, color: "text-[var(--color-high)]" },
               { title: "Threat Routing", desc: "Dispatching actionable intelligence to the dashboard.", icon: BrainCircuit, color: "text-[var(--color-critical)]" },
-            ].map((step, i) => (
+            ].map((step, i) => {
+              const Icon = step.icon;
+              return (
               <div key={i} className="flex gap-6 relative z-10">
                 <div className="w-14 h-14 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center shrink-0 shadow-lg">
-                  <step.icon size={24} className={step.color} />
+                  <Icon size={24} className={step.color} />
                 </div>
                 <div className="pt-2 pb-8">
                   <div className="text-white font-bold text-lg mb-1">{step.title}</div>
                   <div className="text-slate-400 text-sm">{step.desc}</div>
                 </div>
               </div>
-            ))}
+            )})}
           </div>
         </div>
 
