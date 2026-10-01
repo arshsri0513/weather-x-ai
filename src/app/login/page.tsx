@@ -8,8 +8,8 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  const handleAuth = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleAuth = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
@@ -23,7 +23,9 @@ export default function LoginPage() {
   const SocialButton = ({ icon: Icon, provider }: { icon: any, provider: string }) => (
     <button 
       type="button"
-      className="w-full flex items-center justify-center gap-3 bg-slate-900 border border-slate-700 hover:border-slate-500 hover:bg-slate-800 text-white font-medium py-3 rounded-xl transition-all"
+      onClick={() => handleAuth()}
+      disabled={loading}
+      className="w-full flex items-center justify-center gap-3 bg-slate-900 border border-slate-700 hover:border-slate-500 hover:bg-slate-800 text-white font-medium py-3 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
     >
       <Icon size={18} />
       Continue with {provider}
