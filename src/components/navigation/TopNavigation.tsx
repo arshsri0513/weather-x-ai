@@ -1,5 +1,5 @@
 "use client";
-import { Search, User, Globe, Loader2, Activity, Mic } from "lucide-react";
+import { Search, User, Globe, Loader2, Activity, Volume2 } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
 import { useMapContext } from "@/lib/MapContext";
@@ -126,15 +126,16 @@ export function TopNavigation() {
                 }
                 
                 msg.rate = 0.9;
+                msg.volume = 1.0; // Max volume loudly
                 window.speechSynthesis.speak(msg);
               } else {
                 alert("Voice synthesis is not supported in your browser.");
               }
             }}
             className="cursor-pointer hover:scale-110 transition-transform p-1 rounded-full hover:bg-slate-800"
-            title="Test Voice Modulation"
+            title="Play Audio Announcement"
           >
-            <Mic size={16} className="text-[var(--color-accent)] group-hover:animate-pulse"/>
+            <Volume2 size={16} className="text-[var(--color-accent)] group-hover:animate-pulse"/>
           </button>
           <select id="voice-lang-select" defaultValue="en-US" className="bg-transparent text-white font-bold outline-none cursor-pointer appearance-none pr-4 uppercase tracking-widest text-xs [&>option]:bg-slate-900 [&>option]:text-white [&>option]:p-2">
             <option value="en-US">ENG</option>
