@@ -1,6 +1,6 @@
 "use client";
 import { Cpu, Network, Zap, ShieldAlert, Terminal, PlayCircle } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const INITIAL_LOGS = [
   "WEATHER-X AI Core v2.4.1-prod initialized.",
@@ -17,38 +17,58 @@ const STREAM_LOGS = [
   "CLASSIFICATION: CRITICAL EXTREME (Severe Heatwave)",
   "Projecting 14-day temporal evolution vector...",
   "Attention heads focused on high-pressure stagnation.",
-  "Cross-referencing with local radar telemetry...",
-  "Update complete. Sleeping until next cycle."
+  "Cross-referencing with local radar telemetry..."
+];
+
+const INFINITE_DIAGNOSTICS = [
+  "Ingesting real-time IoT station telemetry",
+  "Calibrating atmospheric pressure sensors",
+  "Scanning Doppler radar for microbursts",
+  "Optimizing attention weights in layer 4",
+  "Fetching GOES-16 satellite imagery",
+  "Normalizing multi-modal feature vectors",
+  "Running background validation pass"
 ];
 
 export default function ModelsPage() {
-  const [logs, setLogs] = useState<{text: string, time: string}[]>([
-    { text: "WEATHER-X AI Core v2.4.1-prod initialized.", time: new Date().toLocaleTimeString('en-GB') },
-    { text: "Establishing secure connection to geospatial data lake...", time: new Date().toLocaleTimeString('en-GB') },
-    { text: "OK. Listening for new meteorological ingest streams.", time: new Date().toLocaleTimeString('en-GB') }
-  ]);
+  const [logs, setLogs] = useState<{text: string, time: string}[]>([]);
   const [isStreaming, setIsStreaming] = useState(false);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Initialize with correct times on mount
   useEffect(() => {
-    if (!isStreaming) return;
+    setLogs([
+      { text: "WEATHER-X AI Core v2.4.1-prod initialized.", time: new Date().toLocaleTimeString('en-GB') },
+      { text: "Establishing secure connection to geospatial data lake...", time: new Date().toLocaleTimeString('en-GB') },
+      { text: "OK. Listening for new meteorological ingest streams.", time: new Date().toLocaleTimeString('en-GB') }
+    ]);
     
-    let currentIndex = 0;
-    const interval = setInterval(() => {
-      if (currentIndex < STREAM_LOGS.length) {
-        setLogs(prev => [...prev, { text: STREAM_LOGS[currentIndex], time: new Date().toLocaleTimeString('en-GB') }]);
-        currentIndex++;
-      } else {
-        setIsStreaming(false);
-        clearInterval(interval);
-      }
-    }, 800); // 800ms per log line
-
-    return () => clearInterval(interval);
-  }, [isStreaming]);
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    }
+  }, []);
 
   const triggerInference = () => {
+    if (isStreaming) return;
     setLogs([{ text: "[MANUAL OVERRIDE] Initiating forced inference cycle...", time: new Date().toLocaleTimeString('en-GB') }]);
     setIsStreaming(true);
+    
+    let currentIndex = 0;
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    
+    intervalRef.current = setInterval(() => {
+      if (currentIndex < STREAM_LOGS.length) {
+        setLogs(prev => [...prev, { text: STREAM_LOGS[currentIndex], time: new Date().toLocaleTimeString('en-GB') }]);
+      } else {
+        const randDiag = INFINITE_DIAGNOSTICS[Math.floor(Math.random() * INFINITE_DIAGNOSTICS.length)];
+        const load = (Math.random() * 100).toFixed(1);
+        setLogs(prev => {
+          const updated = [...prev, { text: `[BACKGROUND_TASK] ${randDiag}... (Load: ${load}%)`, time: new Date().toLocaleTimeString('en-GB') }];
+          return updated.length > 50 ? updated.slice(updated.length - 50) : updated;
+        });
+      }
+      currentIndex++;
+    }, 1000);
   };
 
   return (
