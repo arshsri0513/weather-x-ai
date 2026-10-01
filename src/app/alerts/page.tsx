@@ -9,14 +9,48 @@ export default function AlertsPage() {
   const [dispatched, setDispatched] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
-    // Generate dynamic mock alerts
-    const generated = [
-      { id: 'A-1088', type: 'Category 4 Cyclone Risk', location: 'Odisha, India', prob: 94, time: '36 hours', severity: 'CRITICAL', icon: Wind, color: 'text-[var(--color-critical)]', bg: 'bg-[var(--color-critical)]/10', border: 'border-[var(--color-critical)]/30' },
-      { id: 'A-1087', type: 'Urban Flash Flood', location: 'Mumbai, India', prob: 88, time: '12 hours', severity: 'CRITICAL', icon: CloudRain, color: 'text-[var(--color-critical)]', bg: 'bg-[var(--color-critical)]/10', border: 'border-[var(--color-critical)]/30' },
-      { id: 'A-1085', type: 'Severe Heatwave (+6°C)', location: 'Delhi, India', prob: 97, time: 'Ongoing', severity: 'HIGH RISK', icon: Thermometer, color: 'text-[var(--color-high)]', bg: 'bg-[var(--color-high)]/10', border: 'border-[var(--color-high)]/30' },
-      { id: 'A-1082', type: 'Atmospheric Shear', location: 'Chennai, India', prob: 62, time: '48 hours', severity: 'MODERATE', icon: Activity, color: 'text-[var(--color-moderate)]', bg: 'bg-[var(--color-moderate)]/10', border: 'border-[var(--color-moderate)]/30' },
+    const LOCATIONS = ["Odisha, India", "Mumbai, India", "Delhi, India", "Chennai, India", "Kolkata, India", "Bengaluru, India", "Hyderabad, India", "Ahmedabad, India", "Pune, India", "Surat, India", "Jaipur, India", "Lucknow, India", "Kanpur, India", "Nagpur, India", "Patna, India", "Indore, India", "Bhopal, India", "Vadodara, India", "Agra, India", "Varanasi, India", "Guwahati, India", "Kochi, India", "Thiruvananthapuram, India"];
+    
+    const TYPES = [
+      { type: 'Category 4 Cyclone Risk', severity: 'CRITICAL', icon: Wind, color: 'text-[var(--color-critical)]', bg: 'bg-[var(--color-critical)]/10', border: 'border-[var(--color-critical)]/30' },
+      { type: 'Urban Flash Flood', severity: 'CRITICAL', icon: CloudRain, color: 'text-[var(--color-critical)]', bg: 'bg-[var(--color-critical)]/10', border: 'border-[var(--color-critical)]/30' },
+      { type: 'Severe Heatwave (+6°C)', severity: 'HIGH RISK', icon: Thermometer, color: 'text-[var(--color-high)]', bg: 'bg-[var(--color-high)]/10', border: 'border-[var(--color-high)]/30' },
+      { type: 'Atmospheric Shear', severity: 'MODERATE', icon: Activity, color: 'text-[var(--color-moderate)]', bg: 'bg-[var(--color-moderate)]/10', border: 'border-[var(--color-moderate)]/30' },
+      { type: 'Coastal Storm Surge', severity: 'HIGH RISK', icon: AlertTriangle, color: 'text-[var(--color-high)]', bg: 'bg-[var(--color-high)]/10', border: 'border-[var(--color-high)]/30' },
+      { type: 'Extreme Precipitation', severity: 'CRITICAL', icon: CloudRain, color: 'text-[var(--color-critical)]', bg: 'bg-[var(--color-critical)]/10', border: 'border-[var(--color-critical)]/30' },
+      { type: 'Localized Drought', severity: 'MODERATE', icon: Thermometer, color: 'text-[var(--color-moderate)]', bg: 'bg-[var(--color-moderate)]/10', border: 'border-[var(--color-moderate)]/30' },
     ];
-    setAlerts(generated);
+
+    const TIMES = ["Ongoing", "12 hours", "24 hours", "36 hours", "48 hours", "72 hours"];
+
+    const generateAlerts = () => {
+      const numAlerts = Math.floor(Math.random() * 4) + 4; // 4 to 7 alerts
+      const newAlerts = [];
+      const shuffledLocations = [...LOCATIONS].sort(() => 0.5 - Math.random());
+      
+      for(let i = 0; i < numAlerts; i++) {
+        const randType = TYPES[Math.floor(Math.random() * TYPES.length)];
+        const randTime = TIMES[Math.floor(Math.random() * TIMES.length)];
+        const randProb = Math.floor(Math.random() * 40) + 60; // 60% to 99%
+        const id = `A-${Math.floor(Math.random() * 9000) + 1000}`;
+        
+        newAlerts.push({
+          id,
+          location: shuffledLocations[i],
+          prob: randProb,
+          time: randTime,
+          ...randType
+        });
+      }
+      
+      // Sort by severity (CRITICAL first, then HIGH RISK, then MODERATE)
+      const severityScore: Record<string, number> = { 'CRITICAL': 3, 'HIGH RISK': 2, 'MODERATE': 1 };
+      newAlerts.sort((a, b) => severityScore[b.severity] - severityScore[a.severity]);
+      
+      return newAlerts;
+    };
+
+    setAlerts(generateAlerts());
   }, []);
 
   const handleDispatch = (id: string) => {
