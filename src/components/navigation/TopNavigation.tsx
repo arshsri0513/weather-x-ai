@@ -1,5 +1,5 @@
 "use client";
-import { Search, User, Globe, Loader2, Activity } from "lucide-react";
+import { Search, User, Globe, Loader2, Activity, Mic } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
 import { useMapContext } from "@/lib/MapContext";
@@ -99,8 +99,24 @@ export function TopNavigation() {
       </div>
 
       <div className="flex items-center gap-4 xl:gap-6 shrink-0">
+        
+        {/* Language / Voice Selector */}
+        <div className="hidden md:flex items-center gap-2 text-sm text-slate-400 font-medium bg-slate-900/50 px-3 py-1.5 rounded-lg border border-slate-800 hover:bg-slate-800 transition-colors cursor-pointer group relative">
+          <Mic size={16} className="text-[var(--color-accent)] group-hover:animate-pulse"/>
+          <select className="bg-transparent text-white font-bold outline-none cursor-pointer appearance-none pr-4 uppercase tracking-widest text-xs">
+            <option value="en">ENG</option>
+            <option value="hi">HIN</option>
+            <option value="es">SPA</option>
+            <option value="fr">FRA</option>
+            <option value="zh">ZHO</option>
+          </select>
+          <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none">
+             <div className="w-1.5 h-1.5 border-r border-b border-slate-400 transform rotate-45"></div>
+          </div>
+        </div>
+
         <div className="hidden sm:flex items-center gap-2 text-sm text-slate-400 font-medium bg-slate-900/50 px-3 py-1.5 rounded-lg border border-slate-800">
-          <Globe size={16} className="text-[var(--color-accent)]"/>
+          <Activity size={16} className="text-[var(--color-accent)]"/>
           Forecast: <span className="text-white font-bold">14 Days</span>
         </div>
         
