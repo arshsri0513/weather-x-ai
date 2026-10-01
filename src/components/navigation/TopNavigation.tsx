@@ -103,7 +103,7 @@ export function TopNavigation() {
         {/* Language / Voice Selector */}
         <div className="hidden md:flex items-center gap-2 text-sm text-slate-400 font-medium bg-slate-900/50 px-3 py-1.5 rounded-lg border border-slate-800 hover:bg-slate-800 transition-colors cursor-pointer group relative">
           <Mic size={16} className="text-[var(--color-accent)] group-hover:animate-pulse"/>
-          <select className="bg-transparent text-white font-bold outline-none cursor-pointer appearance-none pr-4 uppercase tracking-widest text-xs">
+          <select className="bg-transparent text-white font-bold outline-none cursor-pointer appearance-none pr-4 uppercase tracking-widest text-xs [&>option]:bg-slate-900 [&>option]:text-white [&>option]:p-2">
             <option value="en">ENG</option>
             <option value="hi">HIN</option>
             <option value="es">SPA</option>
