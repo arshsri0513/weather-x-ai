@@ -7,7 +7,7 @@ export function TopNavigation() {
   const [query, setQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
-  const { setMapCenter, setMapZoom } = useMapContext();
+  const { setMapCenter, setMapZoom, addSearchedLocation } = useMapContext();
 
   const handleSearch = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && query.trim()) {
