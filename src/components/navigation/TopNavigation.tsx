@@ -53,10 +53,10 @@ export function TopNavigation() {
   };
 
   return (
-    <header className="h-16 bg-[var(--color-panel)] border-b border-slate-800 flex items-center justify-between px-6 shrink-0 z-50">
-      <div className="flex items-center gap-4 flex-1">
+    <header className="h-16 bg-[var(--color-panel)] border-b border-slate-800 flex items-center justify-between px-6 shrink-0 z-50 overflow-hidden">
+      <div className="flex items-center gap-4 flex-1 min-w-0 pr-4">
         {/* Search */}
-        <div className="relative w-96">
+        <div className="relative w-64 xl:w-96 shrink-0">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             {isSearching ? <Loader2 size={16} className="text-slate-500 animate-spin" /> : <Search size={16} className="text-slate-500" />}
           </div>
@@ -65,7 +65,7 @@ export function TopNavigation() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleSearch}
-            placeholder="Search city, state, region or coordinates (Press Enter)..." 
+            placeholder="Search city or coordinates..." 
             className="block w-full pl-9 pr-3 py-2 border border-slate-700 rounded-lg bg-[var(--color-background)] text-slate-300 placeholder-slate-500 focus:outline-none focus:border-[var(--color-accent)] text-sm transition-all"
           />
           {errorMsg && (
@@ -76,38 +76,38 @@ export function TopNavigation() {
         </div>
 
         {/* Live Telemetry Bar */}
-        <div className="hidden lg:flex items-center gap-4 xl:gap-6 ml-4 xl:ml-8 text-[9px] xl:text-[10px] font-mono font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap overflow-hidden">
-          <div className="flex items-center gap-2">
+        <div className="hidden lg:flex items-center gap-3 xl:gap-6 ml-2 xl:ml-6 text-[9px] xl:text-[10px] font-mono font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap overflow-hidden min-w-0" style={{ maskImage: 'linear-gradient(to right, black 80%, transparent 100%)' }}>
+          <div className="flex items-center gap-2 shrink-0">
              <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
-             Active Nodes: <span className="text-white">12,492</span>
+             Nodes: <span className="text-white">12,492</span>
           </div>
-          <div className="h-3 w-px bg-slate-800"></div>
-          <div className="flex items-center gap-2">
+          <div className="h-3 w-px bg-slate-800 shrink-0"></div>
+          <div className="flex items-center gap-2 shrink-0">
              <div className="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse"></div>
-             Avg Latency: <span className="text-white">14ms</span>
+             Latency: <span className="text-white">14ms</span>
           </div>
-          <div className="h-3 w-px bg-slate-800"></div>
-          <div className="flex items-center gap-2">
+          <div className="h-3 w-px bg-slate-800 shrink-0"></div>
+          <div className="flex items-center gap-2 shrink-0">
              <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse shadow-[0_0_8px_red]"></div>
-             Threat Level: <span className="text-white">Elevated</span>
+             Threat: <span className="text-white">Elevated</span>
           </div>
-          <div className="h-3 w-px bg-slate-800"></div>
-          <div className="flex items-center gap-2 text-purple-400">
+          <div className="h-3 w-px bg-slate-800 shrink-0 hidden xl:block"></div>
+          <div className="hidden xl:flex items-center gap-2 text-purple-400 shrink-0">
              <Activity size={12}/> Core Sync
           </div>
         </div>
       </div>
 
-      <div className="flex items-center gap-6">
-        <div className="flex items-center gap-2 text-sm text-slate-400 font-medium bg-slate-900/50 px-3 py-1.5 rounded-lg border border-slate-800">
+      <div className="flex items-center gap-4 xl:gap-6 shrink-0">
+        <div className="hidden sm:flex items-center gap-2 text-sm text-slate-400 font-medium bg-slate-900/50 px-3 py-1.5 rounded-lg border border-slate-800">
           <Globe size={16} className="text-[var(--color-accent)]"/>
-          Forecast Horizon: <span className="text-white font-bold">14 Days</span>
+          Forecast: <span className="text-white font-bold">14 Days</span>
         </div>
         
-        <div className="h-6 w-px bg-slate-700"></div>
+        <div className="h-6 w-px bg-slate-700 hidden sm:block"></div>
         
         <div className="flex items-center gap-2">
-          <Link href="/login" className="w-8 h-8 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-400 hover:bg-slate-700 hover:text-white transition-colors cursor-pointer">
+          <Link href="/login" className="w-8 h-8 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-400 hover:bg-slate-700 hover:text-white transition-colors cursor-pointer shrink-0">
             <User size={16} />
           </Link>
         </div>
