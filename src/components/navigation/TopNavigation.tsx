@@ -101,14 +101,37 @@ export function TopNavigation() {
       <div className="flex items-center gap-4 xl:gap-6 shrink-0">
         
         {/* Language / Voice Selector */}
-        <div className="hidden md:flex items-center gap-2 text-sm text-slate-400 font-medium bg-slate-900/50 px-3 py-1.5 rounded-lg border border-slate-800 hover:bg-slate-800 transition-colors cursor-pointer group relative">
-          <Mic size={16} className="text-[var(--color-accent)] group-hover:animate-pulse"/>
-          <select className="bg-transparent text-white font-bold outline-none cursor-pointer appearance-none pr-4 uppercase tracking-widest text-xs [&>option]:bg-slate-900 [&>option]:text-white [&>option]:p-2">
-            <option value="en">ENG</option>
-            <option value="hi">HIN</option>
-            <option value="es">SPA</option>
-            <option value="fr">FRA</option>
-            <option value="zh">ZHO</option>
+        <div className="hidden md:flex items-center gap-2 text-sm text-slate-400 font-medium bg-slate-900/50 px-3 py-1.5 rounded-lg border border-slate-800 hover:bg-slate-800 transition-colors group relative">
+          <button 
+            onClick={() => {
+              if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const msg = new SpeechSynthesisUtterance();
+                const select = document.getElementById('voice-lang-select') as HTMLSelectElement;
+                const lang = select ? select.value : 'en-US';
+                
+                msg.lang = lang;
+                if (lang.startsWith('hi')) msg.text = "Weather-X AI mein aapka swagat hai. Global system online.";
+                else if (lang.startsWith('es')) msg.text = "Bienvenido a Weather-X AI. Sistema global en línea.";
+                else if (lang.startsWith('fr')) msg.text = "Bienvenue sur Weather-X AI. Système global en ligne.";
+                else if (lang.startsWith('zh')) msg.text = "欢迎来到 Weather-X AI。全球系统已上线。";
+                else msg.text = "Welcome to Weather-X AI. Global spatio temporal intelligence system online.";
+                
+                msg.rate = 0.9;
+                window.speechSynthesis.speak(msg);
+              }
+            }}
+            className="cursor-pointer hover:scale-110 transition-transform"
+            title="Test Voice Modulation"
+          >
+            <Mic size={16} className="text-[var(--color-accent)] group-hover:animate-pulse"/>
+          </button>
+          <select id="voice-lang-select" defaultValue="en-US" className="bg-transparent text-white font-bold outline-none cursor-pointer appearance-none pr-4 uppercase tracking-widest text-xs [&>option]:bg-slate-900 [&>option]:text-white [&>option]:p-2">
+            <option value="en-US">ENG</option>
+            <option value="hi-IN">HIN</option>
+            <option value="es-ES">SPA</option>
+            <option value="fr-FR">FRA</option>
+            <option value="zh-CN">ZHO</option>
           </select>
           <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none">
              <div className="w-1.5 h-1.5 border-r border-b border-slate-400 transform rotate-45"></div>
