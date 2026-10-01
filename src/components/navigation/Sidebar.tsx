@@ -21,10 +21,10 @@ const NAV_ITEMS = [
 ];
 
 const UTILITY_ITEMS = [
-  { name: "System Status", href: "#", icon: Server, status: "online" },
-  { name: "Data Sources", href: "#", icon: Database },
-  { name: "Settings", href: "#", icon: Settings },
-  { name: "About", href: "#", icon: Info },
+  { name: "System Status", href: "/status", icon: Server, status: "online" },
+  { name: "Data Sources", href: "/sources", icon: Database },
+  { name: "Settings", href: "/settings", icon: Settings },
+  { name: "About", href: "/about", icon: Info },
 ];
 
 export function NavigationSidebar() {
