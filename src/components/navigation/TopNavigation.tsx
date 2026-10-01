@@ -1,6 +1,7 @@
 "use client";
 import { Search, User, Globe, Loader2 } from "lucide-react";
 import { useState } from "react";
+import Link from "next/link";
 import { useMapContext } from "@/lib/MapContext";
 
 export function TopNavigation() {
@@ -84,9 +85,9 @@ export function TopNavigation() {
         <div className="h-6 w-px bg-slate-700"></div>
         
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-400 hover:bg-slate-700 hover:text-white transition-colors cursor-pointer">
+          <Link href="/login" className="w-8 h-8 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-400 hover:bg-slate-700 hover:text-white transition-colors cursor-pointer">
             <User size={16} />
-          </div>
+          </Link>
         </div>
       </div>
     </header>
