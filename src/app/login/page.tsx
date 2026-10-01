@@ -1,5 +1,5 @@
 "use client";
-import { Lock, Mail, Key, ShieldCheck, Activity, Github, Chrome, ArrowRight } from "lucide-react";
+import { Lock, Mail, Key, ShieldCheck, Activity, Code, Globe, ArrowRight } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
 
@@ -59,8 +59,8 @@ export default function LoginPage() {
           <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
             
             <div className="flex gap-4">
-              <SocialButton icon={Chrome} provider="Google" />
-              <SocialButton icon={Github} provider="GitHub" />
+              <SocialButton icon={Globe} provider="Google" />
+              <SocialButton icon={Code} provider="GitHub" />
             </div>
 
             <div className="relative flex items-center py-2">
