@@ -104,32 +104,20 @@ export function TopNavigation() {
         <div className="hidden md:flex items-center gap-2 text-sm text-slate-400 font-medium bg-slate-900/50 px-3 py-1.5 rounded-lg border border-slate-800 hover:bg-slate-800 transition-colors group relative">
           <button 
             onClick={() => {
+              const select = document.getElementById('voice-lang-select') as HTMLSelectElement;
+              const lang = select ? select.value : 'en-US';
               if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
                 const msg = new SpeechSynthesisUtterance();
-                const select = document.getElementById('voice-lang-select') as HTMLSelectElement;
-                const lang = select ? select.value : 'en-US';
-                
-                // Set the language strictly to trigger the OS native voice pack
                 msg.lang = lang;
-
-                if (lang.startsWith('hi')) {
-                  msg.text = "Weather-X AI mein aapka swagat hai. Global system online.";
-                } else if (lang.startsWith('es')) {
-                  msg.text = "Bienvenido a Weather-X AI. Sistema global en línea.";
-                } else if (lang.startsWith('fr')) {
-                  msg.text = "Bienvenue sur Weather-X AI. Système global en ligne.";
-                } else if (lang.startsWith('zh')) {
-                  msg.text = "欢迎来到 Weather-X AI。全球系统已上线。";
-                } else {
-                  msg.text = "Welcome to Weather-X AI. Global spatio temporal intelligence system online.";
-                }
-                
+                if (lang.startsWith('hi')) msg.text = "Weather-X AI mein aapka swagat hai. Global system online.";
+                else if (lang.startsWith('es')) msg.text = "Bienvenido a Weather-X AI. Sistema global en línea.";
+                else if (lang.startsWith('fr')) msg.text = "Bienvenue sur Weather-X AI. Système global en ligne.";
+                else if (lang.startsWith('zh')) msg.text = "欢迎来到 Weather-X AI。全球系统已上线。";
+                else msg.text = "Welcome to Weather-X AI. Global spatio temporal intelligence system online.";
                 msg.rate = 0.9;
-                msg.volume = 1.0; // Max volume loudly
+                msg.volume = 1.0;
                 window.speechSynthesis.speak(msg);
-              } else {
-                alert("Voice synthesis is not supported in your browser.");
               }
             }}
             className="cursor-pointer hover:scale-110 transition-transform p-1 rounded-full hover:bg-slate-800"
@@ -137,7 +125,27 @@ export function TopNavigation() {
           >
             <Volume2 size={16} className="text-[var(--color-accent)] group-hover:animate-pulse"/>
           </button>
-          <select id="voice-lang-select" defaultValue="en-US" className="bg-transparent text-white font-bold outline-none cursor-pointer appearance-none pr-4 uppercase tracking-widest text-xs [&>option]:bg-slate-900 [&>option]:text-white [&>option]:p-2">
+          <select 
+            id="voice-lang-select" 
+            defaultValue="en-US" 
+            onChange={(e) => {
+              const lang = e.target.value;
+              if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const msg = new SpeechSynthesisUtterance();
+                msg.lang = lang;
+                if (lang.startsWith('hi')) msg.text = "Weather-X AI mein aapka swagat hai. Global system online.";
+                else if (lang.startsWith('es')) msg.text = "Bienvenido a Weather-X AI. Sistema global en línea.";
+                else if (lang.startsWith('fr')) msg.text = "Bienvenue sur Weather-X AI. Système global en ligne.";
+                else if (lang.startsWith('zh')) msg.text = "欢迎来到 Weather-X AI。全球系统已上线。";
+                else msg.text = "Welcome to Weather-X AI. Global spatio temporal intelligence system online.";
+                msg.rate = 0.9;
+                msg.volume = 1.0;
+                window.speechSynthesis.speak(msg);
+              }
+            }}
+            className="bg-transparent text-white font-bold outline-none cursor-pointer appearance-none pr-4 uppercase tracking-widest text-xs [&>option]:bg-slate-900 [&>option]:text-white [&>option]:p-2"
+          >
             <option value="en-US">ENG</option>
             <option value="hi-IN">HIN</option>
             <option value="es-ES">SPA</option>
