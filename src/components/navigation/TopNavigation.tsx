@@ -148,10 +148,20 @@ export function TopNavigation() {
           </div>
         </div>
 
-        <div className="hidden sm:flex items-center gap-2 text-sm text-slate-400 font-medium bg-slate-900/50 px-3 py-1.5 rounded-lg border border-slate-800">
+        <button 
+          onClick={() => {
+            const el = document.getElementById('forecast-span');
+            if (el) {
+              if (el.innerText === '14 Days') el.innerText = '7 Days';
+              else if (el.innerText === '7 Days') el.innerText = '24 Hours';
+              else el.innerText = '14 Days';
+            }
+          }}
+          className="hidden sm:flex items-center gap-2 text-sm text-slate-400 font-medium bg-slate-900/50 px-3 py-1.5 rounded-lg border border-slate-800 hover:bg-slate-800 hover:text-white transition-colors cursor-pointer active:scale-95"
+        >
           <Activity size={16} className="text-[var(--color-accent)]"/>
-          Forecast: <span className="text-white font-bold">14 Days</span>
-        </div>
+          Forecast: <span id="forecast-span" className="text-white font-bold">14 Days</span>
+        </button>
         
         <div className="h-6 w-px bg-slate-700 hidden sm:block"></div>
         
