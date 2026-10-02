@@ -8,7 +8,7 @@ export function TopNavigation() {
   const [query, setQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
-  const { setMapCenter, setMapZoom, addSearchedLocation } = useMapContext();
+  const { setMapCenter, setMapZoom, addSearchedLocation, forecastHorizon, setForecastHorizon } = useMapContext();
 
   const handleSearch = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && query.trim()) {
@@ -100,6 +100,8 @@ export function TopNavigation() {
 
       <div className="flex items-center gap-4 xl:gap-6 shrink-0">
         
+      <div className="flex items-center gap-4 xl:gap-6 shrink-0">
+        
         {/* Language / Voice Selector */}
         <div className="hidden md:flex items-center gap-2 text-sm text-slate-400 font-medium bg-slate-900/50 px-3 py-1.5 rounded-lg border border-slate-800 hover:bg-slate-800 transition-colors group relative">
           <button 
@@ -150,17 +152,14 @@ export function TopNavigation() {
 
         <button 
           onClick={() => {
-            const el = document.getElementById('forecast-span');
-            if (el) {
-              if (el.innerText === '14 Days') el.innerText = '7 Days';
-              else if (el.innerText === '7 Days') el.innerText = '24 Hours';
-              else el.innerText = '14 Days';
-            }
+            if (forecastHorizon === 7) setForecastHorizon(14);
+            else if (forecastHorizon === 14) setForecastHorizon(21);
+            else setForecastHorizon(7);
           }}
           className="hidden sm:flex items-center gap-2 text-sm text-slate-400 font-medium bg-slate-900/50 px-3 py-1.5 rounded-lg border border-slate-800 hover:bg-slate-800 hover:text-white transition-colors cursor-pointer active:scale-95"
         >
           <Activity size={16} className="text-[var(--color-accent)]"/>
-          Forecast: <span id="forecast-span" className="text-white font-bold">14 Days</span>
+          Forecast: <span className="text-white font-bold">{forecastHorizon} Days</span>
         </button>
         
         <div className="h-6 w-px bg-slate-700 hidden sm:block"></div>

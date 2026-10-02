@@ -2,10 +2,12 @@
 import dynamic from "next/dynamic";
 import { Play, Pause } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useMapContext } from "@/lib/MapContext";
 
 const GlobalMap = dynamic(() => import("@/components/maps/GlobalMap"), { ssr: false });
 
 export default function AnomalyMapPage() {
+  const { forecastHorizon } = useMapContext();
   const [timeStep, setTimeStep] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   
@@ -21,19 +23,19 @@ export default function AnomalyMapPage() {
     if (isPlaying) {
       interval = setInterval(() => {
         setTimeStep((prev) => {
-          if (prev >= 14) {
+          if (prev >= forecastHorizon) {
             setIsPlaying(false);
-            return 14;
+            return forecastHorizon;
           }
           return prev + 1;
         });
       }, 1000); // Advance 1 day every 1 second
     }
     return () => clearInterval(interval);
-  }, [isPlaying]);
+  }, [isPlaying, forecastHorizon]);
 
   const togglePlay = () => {
-    if (timeStep >= 14) {
+    if (timeStep >= forecastHorizon) {
       setTimeStep(0);
     }
     setIsPlaying(!isPlaying);
@@ -95,12 +97,12 @@ export default function AnomalyMapPage() {
               <span className="text-xs font-black text-slate-900 uppercase bg-[var(--color-accent)] px-4 py-1.5 rounded-full shadow-lg shadow-[var(--color-accent)]/20 tracking-wider transition-all">
                 T+ {timeStep * 24} HOURS
               </span>
-              <span className="text-[11px] font-black text-slate-500 uppercase tracking-widest bg-slate-800 px-2 py-1 rounded">14 DAYS</span>
+              <span className="text-[11px] font-black text-slate-500 uppercase tracking-widest bg-slate-800 px-2 py-1 rounded">{forecastHorizon} DAYS</span>
             </div>
             <input 
               type="range" 
-              min="0" max="14" 
-              value={timeStep}
+              min="0" max={forecastHorizon} 
+              value={timeStep > forecastHorizon ? forecastHorizon : timeStep}
               onChange={(e) => {
                 setTimeStep(Number(e.target.value));
                 setIsPlaying(false);
