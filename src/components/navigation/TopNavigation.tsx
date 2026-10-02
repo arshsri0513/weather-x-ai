@@ -112,6 +112,12 @@ export function TopNavigation() {
                 window.speechSynthesis.cancel();
                 const msg = new SpeechSynthesisUtterance();
                 msg.lang = lang;
+                
+                // Explicitly bind a voice to prevent silent failures on Windows/Chrome
+                const voices = window.speechSynthesis.getVoices();
+                const voice = voices.find(v => v.lang.startsWith(lang.split('-')[0])) || voices.find(v => v.default) || voices[0];
+                if (voice) msg.voice = voice;
+
                 if (lang.startsWith('hi')) msg.text = "Weather-X AI mein aapka swagat hai. AI-driven intelligence.";
                 else msg.text = "Welcome to Weather-X AI. AI-driven intelligence.";
                 msg.rate = 0.9;
@@ -133,6 +139,12 @@ export function TopNavigation() {
                 window.speechSynthesis.cancel();
                 const msg = new SpeechSynthesisUtterance();
                 msg.lang = lang;
+                
+                // Explicitly bind a voice to prevent silent failures on Windows/Chrome
+                const voices = window.speechSynthesis.getVoices();
+                const voice = voices.find(v => v.lang.startsWith(lang.split('-')[0])) || voices.find(v => v.default) || voices[0];
+                if (voice) msg.voice = voice;
+
                 if (lang.startsWith('hi')) msg.text = "Weather-X AI mein aapka swagat hai. AI-driven intelligence.";
                 else msg.text = "Welcome to Weather-X AI. AI-driven intelligence.";
                 msg.rate = 0.9;
