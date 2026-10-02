@@ -100,8 +100,6 @@ export function TopNavigation() {
 
       <div className="flex items-center gap-4 xl:gap-6 shrink-0">
         
-      <div className="flex items-center gap-4 xl:gap-6 shrink-0">
-        
         {/* Language / Voice Selector */}
         <div className="hidden md:flex items-center gap-2 text-sm text-slate-400 font-medium bg-slate-900/50 px-3 py-1.5 rounded-lg border border-slate-800 hover:bg-slate-800 transition-colors group relative">
           <button 
