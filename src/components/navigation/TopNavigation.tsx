@@ -116,8 +116,11 @@ export function TopNavigation() {
                 const voice = voices.find(v => v.lang.startsWith(lang.split('-')[0])) || voices.find(v => v.default) || voices[0];
                 if (voice) msg.voice = voice;
 
-                if (lang.startsWith('hi')) msg.text = "Weather-X AI mein aapka swagat hai. AI-driven intelligence.";
-                else msg.text = "Welcome to Weather-X AI. AI-driven intelligence.";
+                if (lang.startsWith('hi')) {
+                  msg.text = "वेदर-एक्स एआई में आपका स्वागत है। हम वास्तविक समय में वैश्विक चरम मौसम विसंगतियों, गंभीर घटनाओं और जलवायु खतरों की एआई-संचालित ट्रैकिंग प्रदान करते हैं।";
+                } else {
+                  msg.text = "Welcome to Weather-X AI. We provide AI-driven spatio-temporal tracking of global extreme weather anomalies, critical events, and climate threats in real-time.";
+                }
                 msg.rate = 0.9;
                 msg.volume = 1.0;
                 window.speechSynthesis.speak(msg);
@@ -143,8 +146,11 @@ export function TopNavigation() {
                 const voice = voices.find(v => v.lang.startsWith(lang.split('-')[0])) || voices.find(v => v.default) || voices[0];
                 if (voice) msg.voice = voice;
 
-                if (lang.startsWith('hi')) msg.text = "Weather-X AI mein aapka swagat hai. AI-driven intelligence.";
-                else msg.text = "Welcome to Weather-X AI. AI-driven intelligence.";
+                if (lang.startsWith('hi')) {
+                  msg.text = "वेदर-एक्स एआई में आपका स्वागत है। हम वास्तविक समय में वैश्विक चरम मौसम विसंगतियों, गंभीर घटनाओं और जलवायु खतरों की एआई-संचालित ट्रैकिंग प्रदान करते हैं।";
+                } else {
+                  msg.text = "Welcome to Weather-X AI. We provide AI-driven spatio-temporal tracking of global extreme weather anomalies, critical events, and climate threats in real-time.";
+                }
                 msg.rate = 0.9;
                 msg.volume = 1.0;
                 window.speechSynthesis.speak(msg);
