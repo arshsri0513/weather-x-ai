@@ -111,9 +111,6 @@ export function TopNavigation() {
                 const msg = new SpeechSynthesisUtterance();
                 msg.lang = lang;
                 if (lang.startsWith('hi')) msg.text = "Weather-X AI mein aapka swagat hai. AI-driven intelligence.";
-                else if (lang.startsWith('es')) msg.text = "Bienvenido a Weather-X AI. Inteligencia impulsada por IA.";
-                else if (lang.startsWith('fr')) msg.text = "Bienvenue sur Weather-X AI. Intelligence pilotée par l'IA.";
-                else if (lang.startsWith('zh')) msg.text = "欢迎来到 Weather-X AI。人工智能驱动的情报。";
                 else msg.text = "Welcome to Weather-X AI. AI-driven intelligence.";
                 msg.rate = 0.9;
                 msg.volume = 1.0;
@@ -135,9 +132,6 @@ export function TopNavigation() {
                 const msg = new SpeechSynthesisUtterance();
                 msg.lang = lang;
                 if (lang.startsWith('hi')) msg.text = "Weather-X AI mein aapka swagat hai. AI-driven intelligence.";
-                else if (lang.startsWith('es')) msg.text = "Bienvenido a Weather-X AI. Inteligencia impulsada por IA.";
-                else if (lang.startsWith('fr')) msg.text = "Bienvenue sur Weather-X AI. Intelligence pilotée par l'IA.";
-                else if (lang.startsWith('zh')) msg.text = "欢迎来到 Weather-X AI。人工智能驱动的情报。";
                 else msg.text = "Welcome to Weather-X AI. AI-driven intelligence.";
                 msg.rate = 0.9;
                 msg.volume = 1.0;
@@ -148,9 +142,6 @@ export function TopNavigation() {
           >
             <option value="en-US">ENG</option>
             <option value="hi-IN">HIN</option>
-            <option value="es-ES">SPA</option>
-            <option value="fr-FR">FRA</option>
-            <option value="zh-CN">ZHO</option>
           </select>
           <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none">
              <div className="w-1.5 h-1.5 border-r border-b border-slate-400 transform rotate-45"></div>
