@@ -76,7 +76,7 @@ export function TopNavigation() {
         </div>
 
         {/* Live Telemetry Bar */}
-        <div className="hidden lg:flex items-center gap-3 xl:gap-6 ml-2 xl:ml-6 text-[9px] xl:text-[10px] font-mono font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap overflow-hidden min-w-0" style={{ maskImage: 'linear-gradient(to right, black 80%, transparent 100%)' }}>
+        <div className="hidden lg:flex flex-1 items-center gap-3 xl:gap-6 ml-2 xl:ml-6 text-[9px] xl:text-[10px] font-mono font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap overflow-hidden min-w-0">
           <div className="flex items-center gap-2 shrink-0">
              <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
              Nodes: <span className="text-white">12,492</span>
@@ -94,6 +94,14 @@ export function TopNavigation() {
           <div className="h-3 w-px bg-slate-800 shrink-0 hidden xl:block"></div>
           <div className="hidden xl:flex items-center gap-2 text-purple-400 shrink-0">
              <Activity size={12}/> Core Sync
+          </div>
+          <div className="h-3 w-px bg-slate-800 shrink-0 hidden xl:block"></div>
+          <div className="hidden xl:flex items-center gap-2 shrink-0">
+             <Globe size={12} className="text-emerald-500"/> Uplink: <span className="text-emerald-400">100%</span>
+          </div>
+          <div className="h-3 w-px bg-slate-800 shrink-0 hidden 2xl:block"></div>
+          <div className="hidden 2xl:flex items-center gap-2 shrink-0">
+             Delta <span className="text-orange-400">+1.2°C</span>
           </div>
         </div>
       </div>
